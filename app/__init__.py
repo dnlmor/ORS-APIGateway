@@ -1,20 +1,11 @@
-from flask import Flask, jsonify, request
-from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity # type: ignore
-import requests
-
-# Initialize extensions
-jwt = JWTManager()
+from flask import Flask
+from .routes import api_gateway_bp
 
 def create_app():
     app = Flask(__name__)
-
-    # Load configuration
     app.config.from_object('config.Config')
-
-    # Initialize extensions
-    jwt.init_app(app)
-
-    # Register routes
-    from app import routes
+    
+    # Register the API Gateway blueprint
+    app.register_blueprint(api_gateway_bp)
 
     return app
